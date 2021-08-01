@@ -1,5 +1,7 @@
 package com.thefundidors.springboot.web.app.controllers;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Controller;
@@ -8,6 +10,8 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.thefundidors.springboot.web.app.models.Usuario;
 
 @Controller
 @RequestMapping("/app")
@@ -36,6 +40,31 @@ public class IndexController {
 		mv.addObject("titulo", "Hola Spring Framework con modelandview");
 		mv.setViewName("indexModelAndView");
 		return mv;
+	}
+	
+	@RequestMapping("/perfil")
+	public String perfil(Model model) {
+		Usuario usuario = new Usuario();
+		usuario.setNombre("Sergio");
+		usuario.setApellidos("Hernandez Jerez");
+		usuario.setEmail("telkj@lfkj.com");
+		model.addAttribute("usuario", usuario);
+		model.addAttribute("titulo", "Perfil del usuario: " .concat(usuario.getNombre()));
+		return "perfil";
+		
+	}
+	
+	@RequestMapping("/listar")
+	public String listar(Model model) {
+		List<Usuario> usuarios = new ArrayList<>();
+		usuarios.add(new Usuario("Sergio", "Hernandez", "sergio@sergio.com"));
+		usuarios.add(new Usuario("Estel", "Guardiola", "estel@estel.com"));
+		usuarios.add(new Usuario("Vega", "Hernandez", "vega@vega.com"));
+		usuarios.add(new Usuario("Deneb", "Hernandez", "deneb@deneb.com"));
+		usuarios.add(new Usuario("Altair", "Hernandez", "altair@altair.com"));
+		model.addAttribute("titulo", "Listado de usuairos:");
+		model.addAttribute("usuarios", usuarios);
+		return "listar";
 	}
 
 }
