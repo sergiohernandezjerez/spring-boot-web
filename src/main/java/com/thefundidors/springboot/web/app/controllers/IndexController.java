@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -18,9 +19,18 @@ import com.thefundidors.springboot.web.app.models.Usuario;
 @RequestMapping("/app")
 public class IndexController {
 	
+	@Value(value = "${texto.indexcontroller.index.titulo}")
+	private String textoIndex;
+	
+	@Value(value = "${texto.indexcontroller.perfil.titulo}")
+	private String textoPerfil;
+	
+	@Value(value = "${texto.indexcontroller.listar.titulo}")
+	private String textoListar;
+	
 	@GetMapping({"/index", "/", "/home"})
 	public String index(Model model) {
-		model.addAttribute("titulo", "Hola Spring Framework");
+		model.addAttribute("titulo", textoIndex);
 		return "index";
 	}
 	
@@ -50,14 +60,14 @@ public class IndexController {
 		usuario.setApellidos("Hernandez Jerez");
 		usuario.setEmail("telkj@lfkj.com");
 		model.addAttribute("usuario", usuario);
-		model.addAttribute("titulo", "Perfil del usuario: " .concat(usuario.getNombre()));
+		model.addAttribute("titulo", textoPerfil .concat(usuario.getNombre()));
 		return "perfil";
 		
 	}
 	
 	@RequestMapping("/listar")
 	public String listar(Model model) {
-		model.addAttribute("titulo", "Listado de usuairos:");
+		model.addAttribute("titulo", textoListar);
 
 		return "listar";
 	}
